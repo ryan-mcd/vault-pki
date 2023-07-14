@@ -88,6 +88,12 @@ variable "int_pki_domain_role_ttl" {
   default     = 2628000
 }
 
+variable "enable_domain_cert_role" {
+  type        = bool
+  description = "Enable or disable domain cert role"
+  default     = false
+}
+
 variable "int_pki_domain_role_name" {
   type        = string
   description = "Intermediate CA issuer domain cert role name"
@@ -115,5 +121,5 @@ variable "allowed_domains" {
 variable "client_cert_cn" {
   type        = string
   description = "client Cert Common Name"
-  default     = "john.smith.doe.123456789"
+  default     = ""
 }

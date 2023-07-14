@@ -69,6 +69,7 @@ resource "vault_pki_secret_backend_intermediate_set_signed" "pki_int" {
 }
 
 resource "vault_pki_secret_backend_role" "domain-certs" {
+  count            = var.enable_domain_cert_role ? 1 : 0
   backend          = vault_mount.intermediate.path
   name             = var.int_pki_domain_role_name
   ttl              = var.int_pki_domain_role_ttl
@@ -92,6 +93,7 @@ resource "vault_pki_secret_backend_role" "client-certs" {
 }
 
 resource "vault_pki_secret_backend_cert" "client-cert" {
+  count       = var.client_cert_cn == "" ? 0 : 1
   backend     = vault_mount.intermediate.path
   name        = vault_pki_secret_backend_role.client-certs.name
 
