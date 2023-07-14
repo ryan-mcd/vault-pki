@@ -58,8 +58,8 @@ variable "int_cn" {
   default     = "example.com Intermediate Authority"
 }
 
-variable "domain" {
-  type        = map(string)
+variable "domains" {
+  type        = list(string)
   description = "Domains for Intermediate CA."
 }
 
