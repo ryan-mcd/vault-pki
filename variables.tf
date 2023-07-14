@@ -40,10 +40,16 @@ variable "country" {
   default     = "USA"
 }
 
+variable "province" {
+  type        = string
+  description = "The province/state"
+  default     = "CA"
+}
+
 variable "locality" {
   type        = string
   description = "The locality"
-  default     = "CA"
+  default     = "San Francisco"
 }
 
 variable "root_issuer_name" {
