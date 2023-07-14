@@ -68,13 +68,33 @@ resource "vault_pki_secret_backend_intermediate_set_signed" "pki_int" {
   certificate = vault_pki_secret_backend_root_sign_intermediate.pki_int.certificate
 }
 
-# resource "vault_pki_secret_backend_role" "this" {
-#   backend          = vault_mount.pki.path
-#   name             = "my_role"
-#   ttl              = 3600
-#   allow_ip_sans    = true
-#   key_type         = "rsa"
-#   key_bits         = 4096
-#   allowed_domains  = ["example.com", "my.domain"]
-#   allow_subdomains = true
-# }
+resource "vault_pki_secret_backend_role" "domain-certs" {
+  backend          = vault_mount.intermediate.path
+  name             = var.int_pki_domain_role_name
+  ttl              = var.int_pki_domain_role_ttl
+#   issuer_ref       = data.vault_pki_secret_backend_issuers.pki_int.key_info[0]
+  allow_ip_sans    = true
+  key_type         = "rsa"
+  key_bits         = 4096
+  allowed_domains  = var.allowed_domains
+  allow_subdomains = true
+}
+
+resource "vault_pki_secret_backend_role" "client-certs" {
+  backend          = vault_mount.intermediate.path
+  name             = var.int_pki_client_role_name
+  ttl              = var.int_pki_client_role_ttl
+#   issuer_ref       = vault_pki_secret_backend_intermediate_set_signed.pki_int.imported_issuers
+  allow_ip_sans    = false
+  key_type         = "rsa"
+  key_bits         = 4096
+  allow_any_name   = true
+}
+
+resource "vault_pki_secret_backend_cert" "client-cert" {
+  backend     = vault_mount.intermediate.path
+  name        = vault_pki_secret_backend_role.client-certs.name
+
+  common_name = var.client_cert_cn
+  revoke      = true
+}

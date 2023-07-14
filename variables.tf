@@ -64,11 +64,6 @@ variable "int_cn" {
   default     = "example.com Intermediate Authority"
 }
 
-variable "domains" {
-  type        = list(string)
-  description = "Domains for Intermediate CA."
-}
-
 variable "root_max_lease_ttl_seconds" {
   type        = number
   description = "Maximum possible lease duration for tokens and secrets in seconds."
@@ -85,4 +80,40 @@ variable "int_max_lease_ttl_seconds" {
   type        = number
   description = "Maximum possible lease duration for tokens and secrets in seconds."
   default     = 157680000
+}
+
+variable "int_pki_domain_role_ttl" {
+  type        = number
+  description = "Maximum possible lease duration for domain certificates"
+  default     = 2628000
+}
+
+variable "int_pki_domain_role_name" {
+  type        = string
+  description = "Intermediate CA issuer domain cert role name"
+  default     = "default-int-ca-domain-role"
+}
+
+variable "int_pki_client_role_ttl" {
+  type        = number
+  description = "Maximum possible lease duration for client certificates."
+  default     = 31536000
+}
+
+variable "int_pki_client_role_name" {
+  type        = string
+  description = "Intermediate CA issuer client cert role name"
+  default     = "default-int-ca-client-role"
+}
+
+variable "allowed_domains" {
+  type        = list(string)
+  description = "Domains for Intermediate CA Issuer Role."
+  default     = ["example.com"]
+}
+
+variable "client_cert_cn" {
+  type        = string
+  description = "client Cert Common Name"
+  default     = "john.smith.doe.123456789"
 }
