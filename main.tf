@@ -88,7 +88,7 @@ resource "vault_pki_secret_backend_role" "client-certs" {
 #   issuer_ref       = vault_pki_secret_backend_intermediate_set_signed.pki_int.imported_issuers
   allow_ip_sans    = false
   key_type         = "rsa"
-  key_bits         = 4096
+  key_bits         = 2048
   allow_any_name   = true
 }
 
